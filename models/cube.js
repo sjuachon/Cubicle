@@ -1,34 +1,76 @@
-const cubes = require('../db/database.json');
-const fs = require('fs');
-const uniqueid = require('uniqid');
+const mongoose = require('mongoose');
+const schema = mongoose.Schema;
+// const Accessory = require('./Accessory')
 
-class Cube{
-  constructor(name, description, image, level){
-    this.id = uniqueid();
-    this.name = name; 
-    this.description = description; 
-    this.image = image; 
-    this.level = level
-  }
+const cubeSchema = schema({
+  name: {
+    type:String, 
+  
+  }, 
+  description:{
+    type:String, 
+  
+  }, 
+  imageUrl:{
+    type:String, 
+  
+  }, 
+  difficultyLevel:{
+    type:Number, 
+  
+    min:1, 
+    max:6
+  }, 
+  accessories:[{
+    type: schema.Types.ObjectId, 
+    ref:'Accessory'
+  }]
+})
 
-  save(){
 
-    return new Promise((resolve, reject)=>{
-      cubes.push(this)
-      fs.writeFile('./db/database.json', JSON.stringify(cubes), err=>{
-        if(err) reject(err)
-        resolve('Cube Added Successfully !!')
-      })
-    })
-  }
+// cubeSchema.path('imageURL').validate(function(){
+//   let pattern = /^http(s)?\:\/\/.*/i;
+//   return pattern.test(this.imageURL)
+// }, 'Must be a correct url')
+
+module.exports = mongoose.model('Cube', cubeSchema)
 
 
-  static findById(id){
-    return new Promise((resolve, reject)=>{
-      const cube = cubes.find(c=>c.id==id)
-      if(cube) resolve(cube)
-      else reject('No cube found')
-    })
-  }
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const mongoose = require('mongoose');
+// const schema = mongoose.Schema;
+// // const Accessory = require('./Accessory')
+
+// const cubeSchema = new mongoose.Schema({
+//   name: String,
+//   description: String,
+//   imageURL: String,
+//   difficultyLevel: Number
+// });
+
+// // Declare Cube to instantiate mongoose.model
+// const Cube = mongoose.model('Cube', cubeSchema);
+
+// module.exports = mongoose.model('Cube', cubeSchema)
