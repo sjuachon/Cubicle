@@ -1,0 +1,48 @@
+<h1>{{oneCube.name}}</h1>
+<input type="text" name="oneCube.name"
+<img class="cube" src="{{oneCube.imageUrl}}">
+<div class="details">
+  <p><span>Description:</span> {{oneCube.description}}</p>
+  <p><span>Difficulty level:</span> {{oneCube.difficultyLevel}}</p>
+
+<div class="form">
+        <form action='/updateCube' method="POST">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" value="{{oneCube.name}}">
+          <label for="name">Description</label>
+          <textarea id="description" name="description" value="{{oneCube.description}}"></textarea>
+          <label for="image">ImageUrl</label>
+          <input type="text" id="imageUrl" name="imageUrl" value="{{oneCube.imageUrl}}">
+          <label for="difficulty">Difficulty</label>
+          <select id="difficulty" name="difficultyLevel" aria-selected="true" aria-valuenow="{{oneCube.difficultyLevel}}">
+            <option value="1">1 - Very Easy</option>
+            <option value="2">2 - Easy</option>
+            <option value="3">3 - Medium (Standard 3x3)</option>
+            <option value="4">4 - Intermediate</option>
+            <option value="5">5 - Expert</option>
+            <option value="6">6 - Hardcore</option>
+          </select>
+          <input type="submit" value="Create">
+        </form>
+      </div>
+
+  <div style="text-align: center">
+    <a class="btn" href="/">Back</a>
+    <a class="btn" href="/attachAccessory/{{oneCube._id}}">Attach Accessory</a>
+    <a class="btn" href="/updateCube/{{oneCube._id}}">Update Cube</a>
+    <a class="btn" href="/deleteCube/{{oneCube._id}}">Delete Cube</a>
+  </div>
+</div>
+
+<h2>Accessories</h2>
+<div class="accessories">
+  {{#each accessories}}
+  <div class="accessory">
+    <img src="{{imageUrl}}" alt="stickerName">
+    <h3>{{name}}</h3>
+    <p>{{description}}</p>
+  </div>
+  {{else}}
+  <h3 class="italic">This cube has no accessories yet...</h3>
+  {{/each}}
+</div>
